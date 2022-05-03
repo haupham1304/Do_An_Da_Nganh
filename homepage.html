@@ -1,0 +1,138 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="UTF-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <link rel="preconnect" href="https://fonts.gstatic.com">
+        <link href="https://fonts.googleapis.com/css2?family=Lato:wght@300;400;700;900&display=swap" rel="stylesheet">
+        <title>Trang chủ</title>
+        <link rel="stylesheet" href="./css/themify-icons/themify-icons.css">
+        <link rel="stylesheet" href="./css/style.css">
+        <link rel="stylesheet" href="./css/homepage.css">
+    </head>
+    <body>
+        <div class="container">
+            <div class="content-body">
+                <!-- menu bar bên trái -->
+                <div class="menu-bar">
+                    <h1 class="menu-title">
+                        Menu
+                    </h1>
+                    <div>
+                        <i class="ti-user"></i>
+                        <a href="profile.html">
+                            <div class="menu-btn">Tài khoản</div>
+                        </a>
+                    </div>
+                    <div>
+                        <i class="ti-settings"></i>
+                        <a href="setting.html">
+                            <div class="menu-btn">Cài đặt</div>
+                        </a>
+                    </div>
+                    <div>
+                        <i class="ti-notepad"></i>
+                        <a href="record.html">
+                            <div class="menu-btn">Hồ sơ hệ thống</div>
+                        </a>
+                    </div>
+                    <div>
+                        <i class="ti-support"></i>
+                        <a href="guide.html">
+                            <div class="menu-bt">Hướng dẫn sử dụng</div>
+                        </a>
+                    </div>
+                </div>
+
+                <!-- phần chính bên phải -->
+                <div class="main-content">
+                    <!-- thanh header bên trên -->
+                    <div class="header-bar">
+                        <div class="search-bar">
+                            <input type="text" placeholder="Search..">
+                        </div>
+                        <a href="homepage.html"><div class="header-btn">Trang chủ</div></a>
+                        <a href="#"><div class="header-btn">Về chúng tôi</div></a>
+                        <a href="#"><div class="header-btn">Hỗ trợ</div></a>
+                        <div class="account-btn">
+                            <i class="ti-user"></i>
+                            <div class="account-name">Phạm Công Hậu</div>
+                            <i class="ti-angle-down" onclick="openUserMenu()"></i>
+                            <i class="ti-angle-up" onclick="closeUserMenu()"></i>
+                        </div>
+    
+                        <!-- user menu -->
+                        <div class="user-menu">
+                            <div class="user-btn" id="profile-btn" onclick="window.location = 'profile.html';">
+                                Hồ sơ
+                            </div>
+                            <div class="user-btn" id="logout-btn">
+                                Đăng xuất
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Phần nội dung và thông báo -->
+                    <div class="info-and-noti">
+                        <div class="info">
+                            <div class="sensor-info">
+                                <div class="sensor-temp">
+                                    Nhiệt độ: <span id="temp">33 độ C</span>
+                                </div>
+                                <div class="sensor-humidity">
+                                    Độ ẩm là: <span id="humidity">65%</span>
+                                </div>
+                                <div class="last-update">Đã cập nhật <span class="datetime">29/04/2022 5:00 PM</span></div>
+                            </div>
+
+                            <div class="info-btns">
+                                <a href="#"><div class="check-btn">Kiểm tra ngay</div></a>
+                                <a href="changeTemperature.html"><div class="modify-btn">Điều chỉnh ngay</div></a>
+                            </div>
+                        </div>
+
+                        <!-- Thông báo -->
+                        <div class="noti">
+                            <div class="date-time" id="curr-date-time">
+                                <h2 id="curr-time">7:00 AM</h2>
+                                <h2 id="curr-date">29/04/2022</h2>
+                            </div>
+                            <div class="noti-card">
+                                <div class="noti-description">
+                                    <div class="noti-title">
+                                        Kiểm tra hệ thống
+                                    </div>
+                                    <div class="noti-time">
+                                        bbbbbbbbb
+                                    </div>
+                                </div>
+                                <div class="noti-close-btn">X</div>
+                            </div>
+                            <div class="noti-card">
+                                <div class="noti-description">
+                                    <div class="noti-title">
+                                        Kiểm tra hệ thống
+                                    </div>
+                                    <div class="noti-time">
+                                        bbbbbbbbb
+                                    </div>
+                                </div>
+                                <div class="noti-close-btn">X</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- footer bên dưới -->
+            <div class="footer">
+                <a href="#">Sản phẩm</a>
+                <a href="#">Dịch vụ và điều khoản</a>
+                <a href="#">Hỗ trợ</a>
+                <a href="#">Về chúng tôi</a>
+            </div>
+        </div>
+        <script src="./js/userMenu.js"></script>
+    </body>
+</html>

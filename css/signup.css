@@ -1,0 +1,126 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+html {
+    background-color: #ffffff;
+    color: #5a5a5a;
+    font-family: 'Lato', sans-serif;
+    font-size: 20px;
+    text-rendering: optimizeLegibility;
+}
+
+.clearfix::after {
+    content: "";
+    display: table;
+    clear: both;
+}
+
+.body-form{
+    background-color: #E5E5E5;
+    margin: 0px 100px;
+    margin-top: 120px;
+    padding: 50px 0px;
+    text-align: center;
+}
+
+h1{
+    color: black;
+    font-weight: 600;
+    font-size: 40px;
+}
+
+form{
+    display: inline-block;
+    text-align: right;
+    width: 670px;
+}
+
+.label-input{
+    color: black;
+    font-weight: 400;
+    font-size: 24px;
+    margin-top: 50px;
+}
+
+.text-input{
+    background-color: #FFFFFF;
+    border-radius: 5px;
+    width: 433px;
+    height: 30px;
+    margin-top: 50px;
+    margin-left: 30px;
+}
+
+.signup-btn-container{
+    background-color: #3693EA;
+    border-radius: 20px;
+    cursor: pointer;
+    display: inline-block;
+    margin-top: 50px;
+    width: 500px;
+    height: 35px;
+    align-items: center;
+    justify-content: center;
+}
+
+.signup-btn{
+    color: #FFFFFF;
+    font-weight: 500;
+    font-size: 20px;
+    line-height: 36px;
+    text-decoration: none;
+}
+
+.signup-btn-container:hover,
+.signup-btn-container:active{
+    background-color: #114E87;
+}
+
+.text{
+    color: black;
+    font-weight: 500;
+    font-size: 20px;
+    line-height: 33px;
+}
+
+.sign-in{
+    color: #3693EA;
+    font-weight: 550;
+    font-size: 20px;
+    line-height: 33px;
+    text-decoration: none;
+}
+
+.sign-in:hover,
+.sign-in:active{
+    color: #114E87;
+}
+
+footer{
+    align-items: center;
+    background-color: #E5E5E5;
+    display: flex;
+    justify-content: center;
+    height: 100px;
+    margin: 50px 100px;
+}
+
+.footer-list a{
+    color: #000000;
+    font-weight: 500;
+    font-size: 28px;
+    margin-left: 100px;
+    text-decoration: none;
+}
+
+.footer-list a:first-child{
+    margin-left: 0px;
+}
+
+.footer-list a:hover,
+.footer-list a:active{
+    color: #5a5a5a;
+}

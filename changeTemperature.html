@@ -1,0 +1,145 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="UTF-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <link rel="preconnect" href="https://fonts.gstatic.com">
+        <link href="https://fonts.googleapis.com/css2?family=Lato:wght@300;400;700;900&display=swap" rel="stylesheet">
+        <title>Điều chỉnh nhiệt độ</title>
+        <link rel="stylesheet" href="./css/themify-icons/themify-icons.css">
+        <link rel="stylesheet" href="./css/style.css">
+        <link rel="stylesheet" href="./css/changeTemperature.css">
+    </head>
+    <body>
+        <div class="container">
+            <div class="content-body">
+                <!-- menu bar bên trái -->
+                <div class="menu-bar">
+                    <h1 class="menu-title">
+                        Menu
+                    </h1>
+                    <div>
+                        <i class="ti-user"></i>
+                        <a href="profile.html">
+                            <div class="menu-btn">Tài khoản</div>
+                        </a>
+                    </div>
+                    <div>
+                        <i class="ti-settings"></i>
+                        <a href="setting.html">
+                            <div class="menu-btn">Cài đặt</div>
+                        </a>
+                    </div>
+                    <div>
+                        <i class="ti-notepad"></i>
+                        <a href="record.html">
+                            <div class="menu-btn">Hồ sơ hệ thống</div>
+                        </a>
+                    </div>
+                    <div>
+                        <i class="ti-support"></i>
+                        <a href="guide.html">
+                            <div class="menu-bt">Hướng dẫn sử dụng</div>
+                        </a>
+                    </div>
+                </div>
+
+                <!-- phần chính bên phải -->
+                <div class="main-content">
+                    <!-- thanh header bên trên -->
+                    <div class="header-bar">
+                        <div class="search-bar">
+                            <input type="text" placeholder="Search..">
+                        </div>
+                        <a href="homepage.html"><div class="header-btn">Trang chủ</div></a>
+                        <a href="#"><div class="header-btn">Về chúng tôi</div></a>
+                        <a href="#"><div class="header-btn">Hỗ trợ</div></a>
+                        <div class="account-btn">
+                            <i class="ti-user"></i>
+                            <div class="account-name">Phạm Công Hậu</div>
+                            <i class="ti-angle-down" onclick="openUserMenu()"></i>
+                            <i class="ti-angle-up" onclick="closeUserMenu()"></i>
+                        </div>
+    
+                        <!-- user menu -->
+                        <div class="user-menu">
+                            <div class="user-btn" id="profile-btn" onclick="window.location = 'profile.html';">
+                                Hồ sơ
+                            </div>
+                            <div class="user-btn" id="logout-btn">
+                                Đăng xuất
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- form và đề cử -->
+                    <div class="modify-and-suggestion">
+                        <div class="modify-form">
+                            <form action="">
+                                <h2 class="form-title">
+                                    Chọn thông số mong muốn 
+                                </h2>
+                                <div class="input-field">
+                                    <label for="temp-input">Nhiệt độ: </label>
+                                    <select name="temp-input" id="temp-input">
+                                        <option value="32">32</option>
+                                        <option value="33" selected>33</option>
+                                        <option value="34">34</option>
+                                        <option value="35">35</option>
+                                    </select>
+                                </div>
+                                <div class="input-field">
+                                    <label for="humid-input">Độ ẩm: </label>
+                                    <select name="humid-input" id="humid-input">
+                                        <option value="63">63</option>
+                                        <option value="64">64</option>
+                                        <option value="65" selected>65</option>
+                                        <option value="66">66</option>
+                                    </select>
+                                </div>
+
+                                <div class="modify-form-btns">
+                                    <a class="decline-btn" href="#">Xác nhận</a>
+                                    <a class="accept-btn" href="homepage.html">Hủy</a>
+                                </div>
+                            </form>
+                        </div>
+
+                        <!-- Đề xuất -->
+                        <div class="suggestion">
+                            <div class="suggestion-title">
+                                <h2>Các đề xuất</h2>
+                            </div>
+                            <div class="suggestion-card">
+                                <div class="suggestion-description">
+                                    <div class="card-title">
+                                        Điều chỉnh môi trường
+                                    </div>
+                                </div>
+                                <div class="card-btn">></div>
+                            </div>
+                            <div class="suggestion-card">
+                                <div class="suggestion-description">
+                                    <div class="card-title">
+                                        Kiểm tra hệ thống
+                                    </div>
+                                </div>
+                                <div class="card-btn">X</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- footer bên dưới -->
+            <div class="footer">
+                <a href="#">Sản phẩm</a>
+                <a href="#">Dịch vụ và điều khoản</a>
+                <a href="#">Hỗ trợ</a>
+                <a href="#">Về chúng tôi</a>
+            </div>
+        </div>
+        <script src="./js/userMenu.js"></script>
+    </body>
+</html>

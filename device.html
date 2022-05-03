@@ -1,0 +1,239 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="preconnect" href="https://fonts.gstatic.com">
+    <link href="https://fonts.googleapis.com/css2?family=Lato:wght@300;400;700;900&display=swap" rel="stylesheet">
+    <title>Thiết bị</title>
+    <link rel="stylesheet" href="./css/themify-icons/themify-icons.css">
+    <link rel="stylesheet" href="./css/style.css">
+    <link rel="stylesheet" href="./css/homepage.css">
+</head>
+
+<body>
+    <div class="container">
+        <div class="content-body">
+            <!-- menu bar bên trái -->
+            <div class="menu-bar">
+                <h1 class="menu-title">
+                    Menu
+                </h1>
+                <div>
+                    <i class="ti-settings"></i>
+                    <a href="setting.html">
+                        <div class="menu-btn">Cài đặt chung</div>
+                    </a>
+                </div>
+                <div>
+                    <i class="ti-bell"></i>
+                    <a href="reminder.html">
+                        <div class="menu-btn">Nhắc nhở</div>
+                    </a>
+                </div>
+                <div>
+                    <i class="ti-harddrives"></i>
+                    <a href="device.html">
+                        <div class="menu-bt">Thiết bị</div>
+                    </a>
+                </div>
+            </div>
+
+            <!-- phần chính bên phải -->
+            <div class="main-content">
+                <!-- thanh header bên trên -->
+                <div class="header-bar">
+                    <div class="search-bar">
+                        <input type="text" placeholder="Search..">
+                    </div>
+                    <a href="homepage.html">
+                        <div class="header-btn">Trang chủ</div>
+                    </a>
+                    <a href="#">
+                        <div class="header-btn">Về chúng tôi</div>
+                    </a>
+                    <a href="#">
+                        <div class="header-btn">Hỗ trợ</div>
+                    </a>
+                    <div class="account-btn">
+                        <i class="ti-user"></i>
+                        <div class="account-name">Phạm Công Hậu</div>
+                        <i class="ti-angle-down" onclick="openUserMenu()"></i>
+                        <i class="ti-angle-up" onclick="closeUserMenu()"></i>
+                    </div>
+
+                    <!-- user menu -->
+                    <div class="user-menu">
+                        <div class="user-btn" id="profile-btn" onclick="window.location = 'profile.html';">
+                            Hồ sơ
+                        </div>
+                        <div class="user-btn" id="logout-btn">
+                            Đăng xuất
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Phần nội dung và thông báo -->
+                <div class="info-and-noti">
+                    <div class="info">
+                        <div class="sensor-info">
+                            <div class="sensor-temp_1">
+                                ID
+                            </div>
+                            <div class="sensor-temp_2">
+                                Sensor
+                            </div>
+                            <div class="sensor-temp_3">
+                                Trạng Thái
+                            </div>
+                            <div class="sensor-temp_4">
+                                Thời Gian
+                            </div>
+                        </div>
+                        <hr style="width:100%;text-align:left;margin-left:1">
+                        <div class="info-btns">
+                            <div class="info_1">
+                                ICD_01
+                            </div>
+                            <div class="info_2">
+                                ICD 12C
+                            </div>
+                            <div class="info_3">
+                                Đang kết nối
+                            </div>
+                            <div class="info_4">
+                                21/04/22, 10:01PM
+                            </div>
+                            <button class="snip1457_disconnet"> Ngắt kết nối </button>
+                        </div>
+                        <hr style="width:100%;text-align:left;margin-left:1">
+                        <div class="info-btns">
+                            <div class="info_1">
+                                BUZ_01
+                            </div>
+                            <div class="info_2">
+                                BUZZER
+                            </div>
+                            <div class="info_3">
+                                Không kết nối
+                            </div>
+                            <div class="info_4">
+                                21/04/22, 10:01PM
+                            </div>
+                            <button class="snip1457_connet"> Kết nối </button>
+                        </div>
+                        <hr style="width:100%;text-align:left;margin-left:1">
+                        <div class="info-btns">
+                            <div class="info_1">
+                                LED_01
+                            </div>
+                            <div class="info_2">
+                                A 2-CL SINGLE LED
+                            </div>
+                            <div class="info_3">
+                                Không kết nối
+                            </div>
+                            <div class="info_4">
+                                21/04/22, 10:01PM
+                            </div>
+                            <button class="snip1457_connet"> Kết nối </button>
+                        </div>
+                        <hr style="width:100%;text-align:left;margin-left:1">
+                        <div class="info-btns">
+                            <div class="info_1">
+                                DHT_01
+                            </div>
+                            <div class="info_2">
+                                DHT11
+                            </div>
+                            <div class="info_3">
+                                Không kết nối
+                            </div>
+                            <div class="info_4">
+                                21/04/22, 10:01PM
+                            </div>
+                            <button class="snip1457_connet"> Kết nối </button>
+                        </div>
+                        <hr style="width:100%;text-align:left;margin-left:1">
+
+                        <div class="info-btns">
+                            <div class="info_1">
+                                RC_01
+                            </div>
+                            <div class="info_2">
+                                RELAY CIRCUIT
+                            </div>
+                            <div class="info_3">
+                                Đang kết nối
+                            </div>
+                            <div class="info_4">
+                                21/04/22, 10:01PM
+                            </div>
+                            <button class="snip1457_disconnet"> Ngắt kết nối </button>
+                        </div>
+                        <hr style="width:100%;text-align:left;margin-left:1">
+                        <div class="info-btns">
+                            <div class="info_1">
+                                MP_01
+                            </div>
+                            <div class="info_2">
+                                MINI PUMP
+                            </div>
+                            <div class="info_3">
+                                Không kết nối
+                            </div>
+                            <div class="info_4">
+                                21/04/22, 10:01PM
+                            </div>
+                            <button class="snip1457_connet"> Kết nối </button>
+                        </div>
+                        <hr style="width:100%;text-align:left;margin-left:1">
+                    </div>
+
+                    <!-- Thông báo -->
+                    <div class="noti">
+                        <div class="date-time" id="curr-date-time">
+                            <h2 id="curr-time">7:00 AM</h2>
+                            <h2 id="curr-date">29/04/2022</h2>
+                        </div>
+                        <div class="noti-card">
+                            <div class="noti-description">
+                                <div class="noti-title">
+                                    Kiểm tra hệ thống
+                                </div>
+                                <div class="noti-time">
+                                    08:00 PM, 12/03/2022
+                                </div>
+                            </div>
+                            <div class="noti-close-btn">X</div>
+                        </div>
+                        <div class="noti-card">
+                            <div class="noti-description">
+                                <div class="noti-title">
+                                    Đã hoàn thành điều chỉnh nhiệt độ
+                                </div>
+                                <div class="noti-time">
+                                    08:20 PM, 12/03/2022
+                                </div>
+                            </div>
+                            <div class="noti-close-btn">X</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- footer bên dưới -->
+        <div class="footer">
+            <a href="#">Sản phẩm</a>
+            <a href="#">Dịch vụ và điều khoản</a>
+            <a href="#">Hỗ trợ</a>
+            <a href="#">Về chúng tôi</a>
+        </div>
+    </div>
+    <script src="./js/userMenu.js"></script>
+</body>
+
+</html>

@@ -1,0 +1,187 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+html {
+    background-color: #ffffff;
+    color: black;
+    font-family: 'Lato', sans-serif;
+    font-size: 18px;
+    text-rendering: optimizeLegibility;
+}
+
+.clearfix::after {
+    content: "";
+    display: table;
+    clear: both;
+}
+
+.content-body{
+    display: flex;
+    margin: 20px 0;
+    padding: 10px;
+    height: calc(100vh - 100px);
+}
+
+.menu-bar{
+    flex: 1;
+    margin: 10px;
+    padding: 10px;
+    background-color: #e5e5e5;
+}
+
+.menu-bar .menu-title{
+    text-align: center;
+    font-weight: 700;
+    color: black;
+}
+
+.menu-bar > div{
+    display: flex;
+    margin: 12px;
+    padding: 5px;
+    min-width: 200px;
+    height: 46px;
+    overflow: hidden;
+}
+
+.menu-bar i {
+    line-height: 36px;
+    font-weight: 900;
+    flex: 1;
+}
+.menu-bar a{
+    flex: 5;
+    text-align: center;
+    background-color: #3693EA;
+    color: white;
+    border-radius: 10px;
+    text-decoration: none;
+    line-height: 36px;
+}
+
+.menu-bar a:hover{
+    background-color: #114E87;
+    border: 2px solid #3693EA;
+    line-height: 32px;
+
+}
+
+.main-content{
+    flex: 3;
+    margin: 10px;
+    padding: 0 10px;
+    height: 100%;
+}
+
+.header-bar{
+    background-color: #E5E5E5;
+    height: 60px;
+    padding: 5px;
+    /* position: absolute; */
+    clear: both;
+}
+
+
+
+.header-bar div, .header-bar a{
+    display: inline;
+    line-height: 50px;
+    padding: 0 5px;
+    text-decoration: none;
+    color: black;
+    min-width: 80px;
+}
+
+
+.header-bar .search-bar input[type=text]{
+    line-height: 30px;
+    padding: 0 10px;
+    border-radius: 10px;
+    font-size: 20px;
+    border: none;
+    width: 22%;
+    min-width: 120px;
+}
+
+.header-bar .search-bar{
+    height: 36px;
+    margin: 0;
+    margin-top: -8px;
+    
+}
+
+.header-bar .header-btn{
+    margin-left: 20px;
+    padding: 0 10px;
+    font-weight: 600;
+    font-size: 22px;
+    line-height: 50px;
+}
+
+.header-bar .header-btn:hover{
+    /* background-color:#5a5a5a; */
+    color: #5a5a5a;
+}
+
+.account-btn{
+    margin-left: 180px;
+    height: 100vh;
+    width: 170px;
+}
+
+.ti-angle-up,
+.ti-angle-down{
+    cursor: pointer;
+}
+
+.ti-angle-up{
+    display: none;
+}
+
+.header-bar .user-menu{
+    display: none;
+    background-color: white;
+    position: absolute;
+    float: right;
+    top: 100px;
+    right: 30px;
+    border-radius: 10px;
+    border: 0.5px solid #e5e5e5;
+}
+
+.header-bar .user-btn{
+    cursor: pointer;
+    display: block;
+    text-align: center;
+    padding: 2px;
+    width: 170px;
+}
+
+
+.footer{
+    align-items: center;
+    display: flex;
+    justify-content: center;
+    background-color: #e5e5e5;
+    height: 70px;
+    padding: 5px;
+    margin: -10px 20px;
+}
+
+.footer a{
+    flex: 1;
+    text-align: center;
+    display: inline;
+    text-decoration: none;
+    line-height: 40px;
+    font-weight: 700;
+    font-size: 26px;
+    color: black;
+}
+.footer a:hover,
+.footer a:active{
+    color: #5a5a5a;
+}

@@ -1,0 +1,127 @@
+.modify-and-suggestion{
+    display: flex;
+    height: calc(100% - 80px);
+}
+
+.modify-form{
+    flex: 3;
+    background-color: #e5e5e5;
+    margin-top: 20px;
+    margin-right: 10px;
+    padding: 10px;
+    text-align: center;
+}
+
+.modify-form .input-field{
+    margin: 20px auto;
+    width: 50%;
+    min-width: 250px;
+    display: flex;
+    flex-grow: initial;
+    height: 60px;
+    padding: 10px;
+    background-color: white;
+}
+.modify-form .input-field label{
+    flex: 1;
+    line-height: 40px;
+}
+
+.modify-form .input-field select{
+    flex: 1;
+    border: none;
+    border-bottom: 1px solid black;
+    font-size: 1.5em;
+    text-align: center;
+}
+
+
+.modify-form .modify-form-btns{
+    display: flex;
+    justify-content: space-around;
+    text-align: center;
+    margin-top: 50px;
+    height: 40px;
+    font-size: 16px;
+}
+
+.modify-form .modify-form-btns a{
+    text-decoration: none;
+}
+
+.modify-form .decline-btn{
+    cursor: pointer;
+    background-color: #00FF00;
+    color: white;
+    border: 1px solid white;
+    border-radius: 20px;
+    width: 150px;
+    min-width: 150px;
+    line-height: 38px;
+    margin-left: 90px;
+
+}
+
+.modify-form .decline-btn:hover,
+.modify-form .decline-btn:active{
+    background-color: green;
+}
+
+.modify-form .accept-btn{
+    cursor: pointer;
+    background-color: red;
+    color: white;
+    border: 1px solid white;
+    border-radius: 20px;
+    width: 150px;
+    min-width: 150px;
+    line-height: 38px;
+    margin-right: 90px;
+}
+
+.modify-form .accept-btn:hover,
+.modify-form .accept-btn:active{
+    background-color: #930000;
+}
+
+
+.suggestion{
+    flex: 1;
+    background-color: #e5e5e5;
+    margin-top: 20px;
+    margin-left: 10px;
+    padding: 10px;
+}
+
+.suggestion .suggestion-title{
+    text-align: center;
+    margin-bottom: 10px;
+    font-weight: 900;
+}
+
+.suggestion-card{
+    position: relative;
+    padding: 10px 20px;
+    margin: 0 -10px;
+    height: 70px;
+    border-top: 1px solid black;
+}
+
+.suggestion-card .card-title{
+    line-height: 50px;
+}
+
+.suggestion-card .card-btn{
+    position: absolute;
+    top:0 ;
+    right: 0;
+    margin: 10px 0;
+    width: 50px;
+    height: 50px;
+    text-align: center;
+    line-height: 50px;
+}
+
+.suggestion-card .card-btn:hover{
+    background-color: rgba(255, 255, 255, 0.5);
+}
