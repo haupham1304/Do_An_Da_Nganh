@@ -22,7 +22,7 @@ def disconnected(client):
     print("Ngat ket noi")
     sys.exit(1)
 
-def message(client,feed_id,payload):
+def message(payload,client=client,feed_id=AIO_FEED_ID):
     print("data: "+payload)
     if(is_microbit_connected):
         ser.write((str(payload)+"#").encode())

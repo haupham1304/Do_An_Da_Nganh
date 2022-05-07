@@ -1,3 +1,4 @@
+from tkinter import Checkbutton
 import flask
 from tokenize import group
 
@@ -5,12 +6,20 @@ from tokenize import group
 app = flask.Flask(__name__)
 app.config["DEBUG"] = True
 
+def CheckButton():
+    pass
+
+def getData():
+    pass
+
 @app.route('/check', methods=['GET'])
 def home():
-    return "<h1>Distant Reading Archive</h1><p>This site is a prototype API for distant reading of science fiction novels.</p>"
+    CheckButton()
+    listData=getData()
+    return listData
 
 @app.route('/control', methods=['POST'])
 def home1():
-    return "<h1>Distant Reading Archive</h1><p>This site is a prototype API for distant reading of science fiction novels.</p>"
+    return ""
 
 app.run()
