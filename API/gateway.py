@@ -1,9 +1,9 @@
-from curses import baudrate
 from http import client
 from time import time
 import sys
 from Adafruit_IO import MQTTClient
 import serial.tools.list_ports
+
 
 
 AIO_FEED_ID=["nhiet-do","do-am","tin-hieu"]

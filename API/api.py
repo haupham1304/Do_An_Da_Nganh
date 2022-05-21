@@ -1,38 +1,73 @@
-from tkinter import Checkbutton
-import flask
+from operator import truediv
+from flask import Flask, request, jsonify
+from flask_cors import CORS
 from tokenize import group
 import requests
-import json
+import json 
+import sys
+from Adafruit_IO import MQTTClient
 
+app = Flask(__name__)
+CORS(app)
 
-app = flask.Flask(__name__)
-app.config["DEBUG"] = True
+AIO_FEED_ID=["nhiet-do","do-am","tin-hieu"]
+AIO_USERNAME="hoangproIT"
+AIO_KEY="aio_BEZu478Ja0NvhJqEIarbJuBZhqP5"
 
-def CheckButton():
-    pass
+def connected(client):
+    print("Ket noi thanhh cong")
+    for feed in AIO_FEED_ID:
+        client.subscribe(feed)
+
+def disconnected(client):
+    print("Ngat ket noi")
+    sys.exit(1)
+
+client=MQTTClient(AIO_USERNAME,AIO_KEY)
+client.on_connect=connected
+client.on_disconnect=disconnected
+client.connect()
+client.loop_background()
 
 def getData():
-    dic={}
+    dct={}
     try:
         responseNhietDo = requests.get("https://io.adafruit.com/api/v2/hoangproIT/feeds/nhiet-do/data")
         responseDoAm = requests.get("https://io.adafruit.com/api/v2/hoangproIT/feeds/do-am/data")
-        lst_temp=json.loads(responseNhietDo.text.strip())
-        lst_humi=json.loads(responseDoAm.text.strip())
-        dic['nhiet_do']=[]
-        dic['do_am']=[]
-        for i in lst_temp:
-            dic['nhiet_do']+=[(i["created_at"],i["value"])]
-        for i in lst_humi:
-            dic['do_am']+=[(i["created_at"],i["value"])]
+        lst_temp=responseNhietDo.text.strip()
+        lst_humi=responseDoAm.text.strip()
+        dct["temp"]=lst_temp
+        dct["hummid"]=lst_humi
+        print("success")
     except:
         pass
-    return dic
+        print("error")
+    return  json.dumps(dct, indent = 4) 
+
+def getDataTime():
+    dct={}
+    try:
+        responseTime = requests.get("https://io.adafruit.com/api/v2/hoangproIT/feeds/lasttime/data")
+        lst_time=responseTime.text.strip()
+        dct["time"]=lst_time
+        print("success")
+    except:
+        pass
+        print("error")
+    return  json.dumps(dct, indent = 4) 
 
 @app.route('/check', methods=['GET'])
 def home():
-    CheckButton()
-    listData=getData()
-    return listData
+    client.publish("lasttime","1")
+    return getData()
+
+@app.route('/check1', methods=['GET'])
+def home2():
+    return getData()
+
+@app.route('/time', methods=['GET'])
+def time():
+    return getDataTime()
 
 @app.route('/control', methods=['POST'])
 def home1():
