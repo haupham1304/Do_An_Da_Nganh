@@ -194,6 +194,7 @@
 }
 
 .info .info-btns_record {
+    cursor: pointer;
     flex-basis: 100%;
     justify-content: space-around;
     margin-top: 15px;
@@ -206,6 +207,11 @@
     text-align: center;
     border-radius: 10px;
     width: 70%;
+}
+
+.info .info-btns_record:hover,
+.info .info-btns_record:active{
+    background-color: #C6C6C6;
 }
 
 .info .info-btns_1 {

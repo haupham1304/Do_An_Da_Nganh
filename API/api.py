@@ -12,7 +12,7 @@ CORS(app)
 
 AIO_FEED_ID=["nhiet-do","do-am","tin-hieu"]
 AIO_USERNAME="hoangproIT"
-AIO_KEY="aio_BEZu478Ja0NvhJqEIarbJuBZhqP5"
+AIO_KEY="aio_lceG713SqkeRZVzO7sSksNAxko4c"
 
 def connected(client):
     print("Ket noi thanhh cong")
@@ -55,6 +55,7 @@ def getDataTime():
         pass
         print("error")
     return  json.dumps(dct, indent = 4) 
+    
 
 @app.route('/check', methods=['GET'])
 def home():
