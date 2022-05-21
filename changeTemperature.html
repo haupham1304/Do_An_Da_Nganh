@@ -107,7 +107,7 @@
 
                         <!-- Đề xuất -->
                         <!-- Thông báo -->
-                        <div class="noti">
+                        <div class="noti" style="overflow: auto;">
                             <div class="date-time" id="curr-date-time" style="margin-bottom: 20px;">
                                 <h2 id="curr-time"></h2>
                                 <h3 id="curr-date"></h3>
@@ -116,7 +116,7 @@
                             <div ng-repeat="noti in notices">
                                 <div class="noti-description">
                                     <div class="noti-time"
-                                        style="font-size:22px;">
+                                        style="font-size:22px;padding-bottom: 10px;">
                                         - {{noti.created_at}}
                                     </div>
                                 </div>

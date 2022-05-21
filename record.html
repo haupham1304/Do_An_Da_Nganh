@@ -6,17 +6,22 @@
         <meta http-equiv="X-UA-Compatible" content="IE=edge">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
         <link rel="preconnect" href="https://fonts.gstatic.com">
-        <link href="https://fonts.googleapis.com/css2?family=Lato:wght@300;400;700;900&display=swap" rel="stylesheet">
-        <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.3.0-beta.17/angular.min.js"></script>
-        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+        <link
+            href="https://fonts.googleapis.com/css2?family=Lato:wght@300;400;700;900&display=swap"
+            rel="stylesheet">
+        <script
+            src="https://ajax.googleapis.com/ajax/libs/angularjs/1.3.0-beta.17/angular.min.js"></script>
+        <script
+            src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
         <title>Hồ sơ hệ thống</title>
         <link rel="stylesheet" href="./css/themify-icons/themify-icons.css">
         <link rel="stylesheet" href="./css/style.css">
         <link rel="stylesheet" href="./css/homepage.css">
     </head>
 
-    <body ng-app="myapp" ng-controller="recordController" onload="startTime(); startTime1();">
-        <div class="container"  >
+    <body ng-app="myapp" ng-controller="recordController" onload="startTime();
+        startTime1();">
+        <div class="container">
             <div class="content-body">
                 <!-- menu bar bên trái -->
                 <div class="menu-bar">
@@ -88,49 +93,61 @@
                     </div>
 
                     <!-- Phần nội dung và thông báo -->
-                    <div class="info-and-noti">
-                        <div class="info">
-                            <div class="sensor-info">
+                    <div class="info-and-noti" >
+                        <div class="info" style="overflow: auto;">
+                            <div class="sensor-info" >
                                 <div class="sensor-temp">
                                     Hồ sơ hệ thống
                                 </div>
                             </div>
-                            <hr
-                                style="width:100%;text-align:left;margin-left:1">
-                            <div class="info-btns_record">
-                                Hồ sơ hệ thống ngày 22/03/2022
+                            <hr style="width:100%;text-align:left;margin-left:1"
+                                />
+                            <div style="display:{{viewGeneral}}" >
+                                <div ng-repeat="item in items track by $index">
+                                    <div class="info-btns_record"
+                                        ng-click="viewDetailR($index)">
+                                        Hồ sơ hệ thống ngày {{
+                                        item.date.substring(6,8)+"/"+item.date.substring(4,6)+"/"+item.date.substring(0,4)}}
+                                    </div>
+                                </div>
                             </div>
-                            <div class="info-btns_record">
-                                Hồ sơ hệ thống ngày 23/03/2022
+                            <div style="display:{{viewDetail}};">
+                                <table class="table-view">
+                                    <thead>
+                                        <tr>
+                                            <th>Thời gian</th>
+                                            <th>Nhiệt độ (&deg;C)</th>
+                                            <th>Độ ẩm (%)</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr ng-repeat="item in detailData.data.temp track by $index">
+                                            <td>{{item.created_at}}</td>
+                                            <td>{{item.value}}</td>
+                                            <td>{{detailData.data.hummid[$index].value}}</td>
+                                        </tr>
+                                    </tbody>
+                                    
+                                </table>
+                                <button class="info-btns_record"
+                                ng-click="back()"> Quay lại</button>
                             </div>
-                            <div class="info-btns_record">
-                                Hồ sơ hệ thống ngày 24/03/2022
-                            </div>
-                            <div class="info-btns_record">
-                                Hồ sơ hệ thống ngày 25/03/2022
-                            </div>
-                            <div class="info-btns_record">
-                                Hồ sơ hệ thống ngày 26/03/2022
-                            </div>
-                            <div class="info-btns_record">
-                                Hồ sơ hệ thống ngày 27/03/2022
-                            </div>
-                            <div class="info-btns_record">
-                                Hồ sơ hệ thống ngày 28/03/2022
-                            </div>
+                            
                         </div>
 
                         <!-- Thông báo -->
-                        <div class="noti">
-                            <div class="date-time" id="curr-date-time" style="margin-bottom: 20px;">
+                        <div class="noti"  style="overflow: auto;">
+                            <div class="date-time" id="curr-date-time"
+                                style="margin-bottom: 20px;">
                                 <h2 id="curr-time"></h2>
                                 <h3 id="curr-date"></h3>
                             </div>
-                            <h3 style="margin-bottom: 20px;">Thông tin kiểm tra hệ thống</h3>
+                            <h3 style="margin-bottom: 20px;">Thông tin kiểm tra
+                                hệ thống</h3>
                             <div ng-repeat="noti in notices">
                                 <div class="noti-description">
                                     <div class="noti-time"
-                                        style="font-size:22px;">
+                                        style="font-size:22px;padding-bottom: 10px;">
                                         - {{noti.created_at}}
                                     </div>
                                 </div>
@@ -166,6 +183,9 @@
 
                 angular.module("myapp", [])
                     .controller("recordController", function($scope,$http) {
+                        $scope.viewDetail="none";
+                        $scope.viewGeneral="block";
+                        $scope.detailData=null;
                         var today = new Date();
                         $scope.timeNow = today.getHours() + ":" + today.getMinutes();
                         $scope.dateNow = today.getDate() + "/" + (today.getMonth() + 1) + "/" + today.getFullYear();
@@ -192,19 +212,83 @@
                         });
                         }
                     
+                        $scope.items=[];
                         takeTime();
                         $scope.listTemp = "";
                         $scope.listHummid= "";
                         function getData(){
                             $http.get('http://127.0.0.1:5000/check1').
                          success(function(data, status, headers, config) {
+                            
                             $scope.listTemp=JSON.parse(data["temp"]);
                             $scope.listHummid=JSON.parse(data["hummid"]);
+                            var list_data=$scope.listTemp.concat($scope.listHummid);
+                            var list_date=[];
+                            for( var i=0;i<list_data.length;i++){
+                                var date= new Date(list_data[i].created_at);
+                                var d=checkTime(date.getDate());
+                                var M= checkTime((date.getMonth() + 1));
+                                var y=date.getFullYear();
+                                var timeN= y+M+d;
+                                if(!haveElement(list_date,timeN)){
+                                    list_date.push(timeN);
+                                }
+                            }
+                            list_date.sort();
+                            for(var i=0;i<list_date.length;i++){
+                                $scope.items.push({date:list_date[i],data:{temp:[],hummid:[]}});
+                            }
+                            for(var j=0;j<$scope.items.length;j++){
+                                for(var i=0;i<$scope.listTemp.length;i++){
+                                    var date= new Date($scope.listTemp[i].created_at);
+                                    var d=checkTime(date.getDate());
+                                    var M= checkTime((date.getMonth() + 1));
+                                    var y=date.getFullYear();
+                                    var timeN= y+M+d;
+                                    if($scope.items[j].date==timeN){
+                                        $scope.items[j].data.temp.push($scope.listTemp[i]);
+                                        $scope.items[j].data.hummid.push($scope.listHummid[i]);
+                                    }
+                                }
+                            }
+                            for(var i=0;i<$scope.listTemp.length;i++){
+                                var date= new Date($scope.listTemp[i].created_at);
+                                var s=checkTime(date.getSeconds());
+                                var m=checkTime(date.getMinutes());
+                                var h=checkTime(date.getHours());
+                                var d=checkTime(date.getDate());
+                                var M= checkTime((date.getMonth() + 1));
+                                var y=date.getFullYear();
+                                var timeN= d+ "/" + M + "/" + y +"   "+h+ ":" + m+":"+s;
+                                $scope.listTemp[i].created_at=timeN;
+                                $scope.listTemp[i].value=Math.round($scope.listTemp[i].value * 100) / 100 ;
+                                $scope.listHummid[i].created_at=timeN;
+                                $scope.listHummid[i].value=Math.round($scope.listHummid[i].value * 100) / 100 ;
+                            }
                         }).
                         error(function(data, status, headers, config) {
                         });
                         }
                         getData();
+                        function haveElement(lst,ele){
+                            for (var i=0;i<lst.length;i++){
+                                if(lst[i]==ele){
+                                    return true;
+                                }
+                            }
+                            return false;
+                        }
+                        $scope.viewDetailR=function(idx){
+                            $scope.viewGeneral="none";
+                            $scope.viewDetail="block";
+                            $scope.detailData=$scope.items[idx];
+                            console.log($scope.detailData);
+                        }
+                        $scope.back=function(){
+                            $scope.detailData=null;
+                            $scope.viewGeneral="block";
+                            $scope.viewDetail="none";
+                        }
                     });
             </script>
             </div>

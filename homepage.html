@@ -84,7 +84,7 @@
                         <div class="info">
                             <div class="sensor-info">
                                 <div class="sensor-temp">
-                                    Nhiệt độ: <span id="temp">{{tempNow}} độ</span>
+                                    Nhiệt độ: <span id="temp">{{tempNow}} &deg;C</span>
                                 </div>
                                 <div class="sensor-humidity">
                                     Độ ẩm là: <span id="humidity">{{hummidNow}}
@@ -95,7 +95,7 @@
                             </div>
 
                             <div class="info-btns">
-                                <a href="#" ng-click="check()"><div
+                                <a href="" ng-click="check()"><div
                                         class="check-btn">Kiểm tra ngay</div></a>
                                 <a href="changeTemperature.html"><div
                                         class="modify-btn">Điều chỉnh ngay</div></a>
@@ -103,7 +103,7 @@
                         </div>
 
                         <!-- Thông báo -->
-                        <div class="noti">
+                        <div class="noti" style="overflow: auto;">
                             <div class="date-time" id="curr-date-time" style="margin-bottom: 20px;">
                                 <h2 id="curr-time"></h2>
                                 <h3 id="curr-date"></h3>
@@ -112,7 +112,7 @@
                             <div ng-repeat="noti in notices">
                                 <div class="noti-description">
                                     <div class="noti-time"
-                                        style="font-size:22px;">
+                                        style="font-size:22px; padding-bottom: 10px;">
                                         - {{noti.created_at}}
                                     </div>
                                 </div>
@@ -184,20 +184,42 @@
                         }
                     
                         takeTime();
-                        $scope.tempNow="33";
-                        $scope.hummidNow="85";
-                        $scope.lastTime="21/5/2022 10:28:28";
+                        $scope.tempNow="";
+                        $scope.hummidNow="";
+                        $scope.lastTime="";
                         $scope.check=function(){
                             $http.get('http://127.0.0.1:5000/check').
                          success(function(data, status, headers, config) {
-                            //  jQuery("#content-body").showLoading();
+                             getData();
                              takeTime();
-                            //  jQuery("#content-body").hideLoading();
                         }).
                         error(function(data, status, headers, config) {
                         });
                         }
-                        // jQuery("#content-body").hideLoading();
+                        function getData(){
+                            $http.get('http://127.0.0.1:5000/check1').
+                         success(function(data, status, headers, config) {
+                            
+                            $scope.listTemp=JSON.parse(data["temp"]);
+                            $scope.listHummid=JSON.parse(data["hummid"]);
+                            var date= new Date($scope.listTemp[0].created_at);
+                            var s=checkTime(date.getSeconds());
+                            var m=checkTime(date.getMinutes());
+                            var h=checkTime(date.getHours());
+                            var d=checkTime(date.getDate());
+                            var M= checkTime((date.getMonth() + 1));
+                            var y=date.getFullYear();
+                            var timeN= d+ "/" + M + "/" + y +"   "+h+ ":" + m+":"+s;
+                            $scope.listTemp[0].value=Math.round($scope.listTemp[0].value * 100) / 100 ;
+                            $scope.listHummid[0].value=Math.round($scope.listHummid[0].value * 100) / 100 ;
+                            $scope.lastTime=timeN;
+                            $scope.tempNow=$scope.listTemp[0].value;
+                            $scope.hummidNow=$scope.listHummid[0].value;
+                        }).
+                        error(function(data, status, headers, config) {
+                        });
+                        }
+                        getData();
                     });
             </script>
         </div>

@@ -4,15 +4,16 @@ from flask_cors import CORS
 import requests
 import json 
 import sys
+import random
 from Adafruit_IO import MQTTClient
 from http import client
 
 app = Flask(__name__)
 CORS(app)
 
-AIO_FEED_ID=["nhiet-do","do-am","changetem"]
+AIO_FEED_ID=["nhiet-do","do-am","changetem","lasttime"]
 AIO_USERNAME="hoangproIT"
-AIO_KEY="aio_bhig09TUOl5KKrrd4zthSP7SmrQL"
+AIO_KEY="aio_ovLE08GZ234DJz0saHx0tSF57ZLW"
 
 def connected(client):
     print("Ket noi thanhh cong")
@@ -64,9 +65,17 @@ def getDataTime():
         print("error")
     return  json.dumps(dct, indent = 4) 
 
+def random_data(value):
+    if value == AIO_FEED_ID[0]:
+        return random.randint(80, 110)/3
+    else:
+        return random.randint(400, 500)/5
+
 @app.route('/check', methods=['GET'])
 def home():
-    client.publish("lasttime","1")
+    client.publish(AIO_FEED_ID[0], random_data(AIO_FEED_ID[0]))
+    client.publish(AIO_FEED_ID[1], random_data(AIO_FEED_ID[1]))
+    client.publish(AIO_FEED_ID[3],"1")
     return getData()
 
 @app.route('/check1', methods=['GET'])

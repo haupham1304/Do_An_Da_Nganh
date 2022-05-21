@@ -296,3 +296,14 @@
     background-color: rgb(255, 0, 0);
     color: white;
 }
+
+.table-view tr th{
+    padding-bottom: 10px;
+    text-align: center;
+    width: 25%;
+}
+
+.table-view tr td{
+    padding-top: 10px;
+    text-align: center;
+}
