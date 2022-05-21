@@ -1,18 +1,18 @@
-from operator import truediv
+from sre_constants import SUCCESS
 from flask import Flask, request, jsonify
 from flask_cors import CORS
-from tokenize import group
 import requests
 import json 
 import sys
 from Adafruit_IO import MQTTClient
+from http import client
 
 app = Flask(__name__)
 CORS(app)
 
-AIO_FEED_ID=["nhiet-do","do-am","tin-hieu"]
+AIO_FEED_ID=["nhiet-do","do-am","changetem"]
 AIO_USERNAME="hoangproIT"
-AIO_KEY="aio_lceG713SqkeRZVzO7sSksNAxko4c"
+AIO_KEY="aio_bhig09TUOl5KKrrd4zthSP7SmrQL"
 
 def connected(client):
     print("Ket noi thanhh cong")
@@ -22,15 +22,23 @@ def connected(client):
 def disconnected(client):
     print("Ngat ket noi")
     sys.exit(1)
+    
+def subscribe(client,userdata,mid,granted_qos):
+    print("Subscribe thanhh cong")
+    
+def message(payload,client=client,feed_id=AIO_FEED_ID):
+    print("message")
 
 client=MQTTClient(AIO_USERNAME,AIO_KEY)
 client.on_connect=connected
 client.on_disconnect=disconnected
+client.on_message=message
+client.on_subscribe=subscribe
 client.connect()
 client.loop_background()
 
 def getData():
-    dct={}
+    dct = {}
     try:
         responseNhietDo = requests.get("https://io.adafruit.com/api/v2/hoangproIT/feeds/nhiet-do/data")
         responseDoAm = requests.get("https://io.adafruit.com/api/v2/hoangproIT/feeds/do-am/data")
@@ -45,7 +53,7 @@ def getData():
     return  json.dumps(dct, indent = 4) 
 
 def getDataTime():
-    dct={}
+    dct = {}
     try:
         responseTime = requests.get("https://io.adafruit.com/api/v2/hoangproIT/feeds/lasttime/data")
         lst_time=responseTime.text.strip()
@@ -55,7 +63,6 @@ def getDataTime():
         pass
         print("error")
     return  json.dumps(dct, indent = 4) 
-    
 
 @app.route('/check', methods=['GET'])
 def home():
@@ -72,6 +79,7 @@ def time():
 
 @app.route('/control', methods=['POST'])
 def home1():
-    return ""
+    client.publish(AIO_FEED_ID[2],request.data)
+    return jsonify({'task': SUCCESS})
 
 app.run()

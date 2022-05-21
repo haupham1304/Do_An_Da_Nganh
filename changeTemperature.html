@@ -14,7 +14,7 @@
         <link rel="stylesheet" href="./css/changeTemperature.css">
         <link rel="stylesheet" href="./css/homepage.css">
     </head>
-    <body ng-app="myapp" ng-controller="recordController" id="content_body" onload="startTime(); startTime1()">
+    <body ng-app="myapp" ng-controller="changetemController" id="content_body" onload="startTime(); startTime1()">
         <div class="container">
             <div class="content-body">
                 <!-- menu bar bên trái -->
@@ -85,25 +85,21 @@
                                 </h2>
                                 <div class="input-field">
                                     <label for="temp-input">Nhiệt độ: </label>
-                                    <select name="temp-input" id="temp-input">
-                                        <option value="32">32</option>
-                                        <option value="33" selected>33</option>
-                                        <option value="34">34</option>
-                                        <option value="35">35</option>
+                                    <select name="temp-input" id="temp-input" ng-model="tempa">
+                                        <option value="" hidden selected>Chọn nhiệt độ</option>
+                                        <option value="{{item}}" ng-repeat="item in lstT track by $index">{{item}}</option>
                                     </select>
                                 </div>
                                 <div class="input-field">
                                     <label for="humid-input">Độ ẩm: </label>
-                                    <select name="humid-input" id="humid-input">
-                                        <option value="63">63</option>
-                                        <option value="64">64</option>
-                                        <option value="65" selected>65</option>
-                                        <option value="66">66</option>
+                                    <select name="humid-input" id="humid-input" ng-model="humi">
+                                        <option value="" hidden selected>Chọn độ ẩm</option>
+                                        <option value="{{item}}" ng-repeat="item in lstH track by $index">{{item}}</option>
                                     </select>
                                 </div>
 
                                 <div class="modify-form-btns">
-                                    <a class="decline-btn" href="#">Xác nhận</a>
+                                    <a class="decline-btn" href="#" ng-click="sendToServer()">Xác nhận</a>
                                     <a class="accept-btn" href="homepage.html">Hủy</a>
                                 </div>
                             </form>
@@ -163,7 +159,17 @@
                     return i;
                 }
                 angular.module("myapp", [])
-                    .controller("recordController", function($scope,$http) {
+                    .controller("changetemController", function($scope,$http) {
+                        $scope.humi = 0;
+                        $scope.tempa = 0;
+                        $scope.lstH = [];
+                        for (var i = 60; i < 99; i++){
+                            $scope.lstH.push(i);
+                        }
+                        $scope.lstT = [];
+                        for (var i=  15; i < 31; i++){
+                            $scope.lstT.push(i);
+                        }
                         $scope.userName = "Phạm Công Hậu";
                         $scope.notices=[];
                         function checkTime(i) {
@@ -205,7 +211,22 @@
                         error(function(data, status, headers, config) {
                         });
                         }
-                        // jQuery("#content-body").hideLoading();
+                        $scope.sendToServer = function(){
+                            var data = {
+                                tem: $scope.tempa,
+                                hum: $scope.humi
+                            }
+                            $http.post('http://127.0.0.1:5000/control', JSON.stringify(data)).then(function (response) {
+
+                                // This function handles success
+                                alert("Đã gửi yêu cầu thành công");
+                                }, function (response) {
+                                
+                                // this function handles error
+                                alert("Gửi yêu cầu thất bại");
+                                
+                                });
+                        }
                     });
             </script>
         </div>
