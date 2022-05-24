@@ -1,3 +1,38 @@
+<?php session_start(); ?>
+<?php
+    require_once('dbhelp.php');
+    if(!empty($_POST)){
+        $error = array();
+        if (isset($_SESSION)){
+            $s_user = $_SESSION['user'];   
+        }
+    	$sql = "select * from user where Username = '$s_user'";
+    	$userList = executeResult($sql);
+        $std = $userList[0];
+        $id = $std['ID'];
+        $pass = $std['Password'];
+        $s_pass = '';
+        if (isset($_POST["confirm-delete"])) {
+            $s_pass = $_POST['confirm-delete'];
+        }
+        $s_pass = md5($s_pass);
+    	if (strcasecmp($s_pass, $pass) != 0){
+        	$error['password'] = "Password bạn nhập không đúng";
+        	echo '<script type="text/javascript">alert("Password bạn nhập không đúng");',
+            'window.location = "deleteAccount.php";',
+            '</script>';
+    	}
+        if (empty($error)){
+            $sql = "delete from user where ID = '$id'";
+            execute($sql);
+            session_destroy();
+			echo '<script type="text/javascript">alert("Xóa tài khoản thành công");',
+				 'window.location = "signin.php";',
+				 '</script>';
+			die();
+        }
+    }
+?>
 <!DOCTYPE html>
 <html>
 
@@ -7,10 +42,11 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="preconnect" href="https://fonts.gstatic.com">
     <link href="https://fonts.googleapis.com/css2?family=Lato:wght@300;400;700;900&display=swap" rel="stylesheet">
-    <title>Cài đặt</title>
+    <title>Hồ sơ cá nhân</title>
     <link rel="stylesheet" href="./css/themify-icons/themify-icons.css">
     <link rel="stylesheet" href="./css/style.css">
     <link rel="stylesheet" href="./css/homepage.css">
+    <link rel="stylesheet" href="./css/delete.css">
 </head>
 
 <body>
@@ -22,21 +58,21 @@
                     Menu
                 </h1>
                 <div>
-                    <i class="ti-settings"></i>
-                    <a href="setting.html">
-                        <div class="menu-btn">Cài đặt chung</div>
+                    <i class="ti-user"></i>
+                    <a href="profile.php">
+                        <div class="menu-btn">Hồ sơ</div>
                     </a>
                 </div>
                 <div>
-                    <i class="ti-bell"></i>
-                    <a href="reminder.html">
-                        <div class="menu-btn">Nhắc nhở</div>
+                    <i class="ti-unlock"></i>
+                    <a href="changePassword.php">
+                        <div class="menu-btn">Đổi mật khẩu</div>
                     </a>
                 </div>
                 <div>
-                    <i class="ti-harddrives"></i>
-                    <a href="device.html">
-                        <div class="menu-bt">Thiết bị</div>
+                    <i class="ti-trash"></i>
+                    <a href="deleteAccount.php">
+                        <div class="menu-bt">Xóa tài khoản</div>
                     </a>
                 </div>
             </div>
@@ -48,7 +84,7 @@
                     <div class="search-bar">
                         <input type="text" placeholder="Search..">
                     </div>
-                    <a href="homepage.html">
+                    <a href="homepage.php">
                         <div class="header-btn">Trang chủ</div>
                     </a>
                     <a href="#">
@@ -59,39 +95,56 @@
                     </a>
                     <div class="account-btn">
                         <i class="ti-user"></i>
-                        <div class="account-name">Phạm Công Hậu</div>
+                        <?php
+                            require_once ('dbhelp.php');
+                            if (isset($_SESSION)){
+                                $u = $_SESSION['user'];
+                                $p = $_SESSION['pass'];   
+                                $sql = "select * from user where Username = '$u' and Password = '$p'";
+                                $userList = executeResult($sql);
+                                $std = $userList[0];
+                                echo '<div class="account-name">'.$std['Name'].'</div>';
+                            }
+                        ?>
                         <i class="ti-angle-down" onclick="openUserMenu()"></i>
                         <i class="ti-angle-up" onclick="closeUserMenu()"></i>
                     </div>
 
                     <!-- user menu -->
-                    <div class="user-menu">
-                        <div class="user-btn" id="profile-btn" onclick="window.location = 'profile.html';">
+                    <div class="user-dropdown-menu">
+                        <a href="profile.php" class="user-info">Tài khoản của tôi</a>
+                        <form method="post" action="logout.php">
+                            <button class="logout">Đăng Xuất</button>
+                        </form>
+                    </div>
+                    <!-- <div class="user-menu">
+                        <div class="user-btn" id="profile-btn" onclick="window.location = 'profile.php';">
                             Hồ sơ
                         </div>
                         <div class="user-btn" id="logout-btn">
                             Đăng xuất
                         </div>
-                    </div>
+                    </div> -->
                 </div>
 
                 <!-- Phần nội dung và thông báo -->
                 <div class="info-and-noti">
                     <div class="info">
-                        <div class="sensor-info">
-                            1
-                        </div>
-                        <hr style="width:100%;text-align:left;margin-left:1">
-                        <div class="info-btns">
-                            2
-                        </div>
-                        <hr style="width:100%;text-align:left;margin-left:1">
-                        <div class="info-btns">
-                           3
-                        </div>
-                        <hr style="width:100%;text-align:left;margin-left:1">
+                        <h3>Bạn có chắc chắn muốn xóa tài khoản?</h3>
+                        <br>
+                        <h3>Việc này sẽ không thể khôi phục dữ liệu của bạn.</h3>
+                        <hr style="width:100%;text-align:left;margin-left:1px; margin-top:40px;">
+                        <form method="post">
+                            <label class="label-input" for="confirm-delete">Nhập mật khẩu để hoàn tất xóa tài khoản</label>
+                            <input type="password" class="text-input" name="confirm-delete" id="confirm-delete" required="true">
+                            <br>
+                            <div class="modify-form-btn">
+                                <a class="decline-btns" href="profile.php" style="margin-right: 50px;">Hủy</a>
+                                <input type="submit" class="accept-btns" href="signin.php" style="margin-left: 50px; text-align: center; font-size: 16px;" value="Xác nhận">
+                            </div>
+                        </form>
                     </div>
-
+                    
                     <!-- Thông báo -->
                     <div class="noti">
                         <div class="date-time" id="curr-date-time">

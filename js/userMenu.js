@@ -1,9 +1,9 @@
-var userMenu = document.querySelector('.user-menu');
+var userMenu = document.querySelector('.user-dropdown-menu');
 var up = document.querySelector('.ti-angle-up');
 var down = document.querySelector('.ti-angle-down');
 
 function openUserMenu(){
-    userMenu.style.display = 'inline';
+    userMenu.style.display = 'block';
     up.style.display = 'inline';
     down.style.display = 'none';
 }

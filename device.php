@@ -1,3 +1,4 @@
+<?php session_start(); ?>
 <!DOCTYPE html>
 <html>
 
@@ -7,13 +8,15 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="preconnect" href="https://fonts.gstatic.com">
     <link href="https://fonts.googleapis.com/css2?family=Lato:wght@300;400;700;900&display=swap" rel="stylesheet">
+    <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.3.0-beta.17/angular.min.js"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
     <title>Thiết bị</title>
     <link rel="stylesheet" href="./css/themify-icons/themify-icons.css">
     <link rel="stylesheet" href="./css/style.css">
     <link rel="stylesheet" href="./css/homepage.css">
 </head>
 
-<body>
+<body ng-app="myapp" ng-controller="recordController" id="content_body" onload="startTime(); startTime1()">
     <div class="container">
         <div class="content-body">
             <!-- menu bar bên trái -->
@@ -23,19 +26,19 @@
                 </h1>
                 <div>
                     <i class="ti-settings"></i>
-                    <a href="setting.html">
+                    <a href="setting.php">
                         <div class="menu-btn">Cài đặt chung</div>
                     </a>
                 </div>
                 <div>
                     <i class="ti-bell"></i>
-                    <a href="reminder.html">
+                    <a href="reminder.php">
                         <div class="menu-btn">Nhắc nhở</div>
                     </a>
                 </div>
                 <div>
                     <i class="ti-harddrives"></i>
-                    <a href="device.html">
+                    <a href="device.php">
                         <div class="menu-bt">Thiết bị</div>
                     </a>
                 </div>
@@ -48,7 +51,7 @@
                     <div class="search-bar">
                         <input type="text" placeholder="Search..">
                     </div>
-                    <a href="homepage.html">
+                    <a href="homepage.php">
                         <div class="header-btn">Trang chủ</div>
                     </a>
                     <a href="#">
@@ -59,20 +62,36 @@
                     </a>
                     <div class="account-btn">
                         <i class="ti-user"></i>
-                        <div class="account-name">Phạm Công Hậu</div>
+                        <?php
+                            require_once ('dbhelp.php');
+                            if (isset($_SESSION)){
+                                $u = $_SESSION['user'];
+                                $p = $_SESSION['pass'];   
+                                $sql = "select * from user where Username = '$u' and Password = '$p'";
+                                $userList = executeResult($sql);
+                                $std = $userList[0];
+                                echo '<div class="account-name">'.$std['Name'].'</div>';
+                            }
+                        ?>
                         <i class="ti-angle-down" onclick="openUserMenu()"></i>
                         <i class="ti-angle-up" onclick="closeUserMenu()"></i>
                     </div>
 
                     <!-- user menu -->
-                    <div class="user-menu">
-                        <div class="user-btn" id="profile-btn" onclick="window.location = 'profile.html';">
+                    <div class="user-dropdown-menu">
+                        <a href="profile.php" class="user-info">Tài khoản của tôi</a>
+                        <form method="post" action="logout.php">
+                            <button class="logout">Đăng Xuất</button>
+                        </form>
+                    </div>
+                    <!-- <div class="user-menu">
+                        <div class="user-btn" id="profile-btn" onclick="window.location = 'profile.php';">
                             Hồ sơ
                         </div>
                         <div class="user-btn" id="logout-btn">
                             Đăng xuất
                         </div>
-                    </div>
+                    </div> -->
                 </div>
 
                 <!-- Phần nội dung và thông báo -->
@@ -193,32 +212,19 @@
                     </div>
 
                     <!-- Thông báo -->
-                    <div class="noti">
-                        <div class="date-time" id="curr-date-time">
-                            <h2 id="curr-time">7:00 AM</h2>
-                            <h2 id="curr-date">29/04/2022</h2>
+                    <div class="noti" style="overflow: auto;">
+                        <div class="date-time" id="curr-date-time" style="margin-bottom: 20px;">
+                            <h2 id="curr-time"></h2>
+                            <h3 id="curr-date"></h3>
                         </div>
-                        <div class="noti-card">
+                        <h3 style="margin-bottom: 20px;">Thông tin kiểm tra hệ thống</h3>
+                        <div ng-repeat="noti in notices">
                             <div class="noti-description">
-                                <div class="noti-title">
-                                    Kiểm tra hệ thống
-                                </div>
-                                <div class="noti-time">
-                                    08:00 PM, 12/03/2022
+                                <div class="noti-time"
+                                    style="font-size:22px;padding-bottom: 10px;">
+                                    - {{noti.created_at}}
                                 </div>
                             </div>
-                            <div class="noti-close-btn">X</div>
-                        </div>
-                        <div class="noti-card">
-                            <div class="noti-description">
-                                <div class="noti-title">
-                                    Đã hoàn thành điều chỉnh nhiệt độ
-                                </div>
-                                <div class="noti-time">
-                                    08:20 PM, 12/03/2022
-                                </div>
-                            </div>
-                            <div class="noti-close-btn">X</div>
                         </div>
                     </div>
                 </div>
@@ -232,6 +238,77 @@
             <a href="#">Hỗ trợ</a>
             <a href="#">Về chúng tôi</a>
         </div>
+        <script>
+            function startTime() {
+                const today = new Date();
+                let h = today.getHours();
+                let m = today.getMinutes();
+                let s = today.getSeconds();
+                m = checkTime(m);
+                s = checkTime(s);
+                document.getElementById('curr-date').innerHTML =  h + ":" + m + ":" + s;
+                setTimeout(startTime, 1000);
+            }
+            function startTime1() {
+                const today = new Date();
+                let d = today.getDate();
+                let m = today.getMonth()+1;
+                let y = today.getFullYear();
+                m = checkTime(m);
+                d = checkTime(d);
+                document.getElementById('curr-time').innerHTML =  d + "/" + m + "/" + y;
+                setTimeout(startTime, 8640000000);
+            }
+            function checkTime(i) {
+                if (i < 10) {i = "0" + i};  // add zero in front of numbers < 10
+                return i;
+            }
+            angular.module("myapp", [])
+                .controller("recordController", function($scope,$http) {
+                    $scope.userName = "Phạm Công Hậu";
+                    $scope.notices=[];
+                    function checkTime(i) {
+                        if (i < 10) {i = "0" + i};  // add zero in front of numbers < 10
+                        return i;
+                    }   
+                    function takeTime(){
+                    $http.get('http://127.0.0.1:5000/time').
+                     success(function(data, status, headers, config) {
+                        $scope.notices=JSON.parse(data["time"]);
+                        console.log($scope.notices);
+                        for(var i=0;i<$scope.notices.length;i++){
+                            var date= new Date($scope.notices[i].created_at);
+                            var s=checkTime(date.getSeconds());
+                            var m=checkTime(date.getMinutes());
+                            var h=checkTime(date.getHours());
+                            var d=checkTime(date.getDate());
+                            var M= checkTime((date.getMonth() + 1));
+                            var y=date.getFullYear();
+                            var timeN= d+ "/" + M + "/" + y +"   "+h+ ":" + m+":"+s;
+                            $scope.notices[i].created_at=timeN;
+                        }
+                    }).
+                    error(function(data, status, headers, config) {
+                    });
+                    }
+                
+                    takeTime();
+                    $scope.tempNow="33";
+                    $scope.hummidNow="85";
+                    $scope.lastTime="21/5/2022 10:28:28";
+                    $scope.check=function(){
+                        $http.get('http://127.0.0.1:5000/check').
+                     success(function(data, status, headers, config) {
+                        //  jQuery("#content-body").showLoading();
+                         takeTime();
+                        //  jQuery("#content-body").hideLoading();
+                    }).
+                    error(function(data, status, headers, config) {
+                    });
+                    }
+                    // jQuery("#content-body").hideLoading();
+                });
+        </script>
     </div>
     <script src="./js/userMenu.js"></script>
 </body>
