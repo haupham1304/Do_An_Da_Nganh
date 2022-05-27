@@ -1,3 +1,79 @@
+<<<<<<< HEAD:profile.html
+=======
+<?php session_start(); ?>
+<?php
+    require_once ('dbhelp.php');
+    if (isset($_SESSION)) {
+        $s_user = $_SESSION['user'];   
+        $sql = "select * from user where Username = '$s_user'";
+        $userList = executeResult($sql);
+        $std = $userList[0];
+        $ss_id = $std['ID'];
+        $ss_name = $std['Name'];
+        $ss_bday = $std['Birthday'];
+        $ss_pnumber = $std['Phonenumber'];
+        $ss_email = $std['Email'];
+        $ss_user = $std['Username'];
+    }
+
+	$s_name = $s_bday = $s_pnumber = $s_email = $s_user = '';
+	if (!empty($_POST)){
+
+		$error = array();
+
+        if (isset($_POST['name'])){
+			$s_name = $_POST['name'];
+		}
+
+        if (isset($_POST['birthday'])){
+			$s_bday = $_POST['birthday'];
+		}
+
+        if (isset($_POST['phonenumber'])){
+			$s_pnumber = $_POST['phonenumber'];
+		}
+	
+		if (isset($_POST['email'])){
+			$s_email = $_POST['email'];
+		}
+	
+		if (isset($_POST['username'])){
+			$s_user = $_POST['username'];
+		}
+
+        $s_name    = str_replace('\'', '\\\'', $s_name);
+        $s_bday    = str_replace('\'', '\\\'', $s_bday);
+        $s_pnumber = str_replace('\'', '\\\'', $s_pnumber);
+		$s_email   = str_replace('\'', '\\\'', $s_email);
+		$s_user    = str_replace('\'', '\\\'', $s_user);
+
+        if (strlen($s_user) < 6){
+            $error['usernamelen'] = "Username này có chiều dài nhỏ hơn 6 ký tự";
+        	echo '<script type="text/javascript">alert("Username này có chiều dài nhỏ hơn 6 ký tự")</script>;</script>';
+        }
+
+    	$sql = "select * from user where Username = '$s_user'";
+    	$userList = executeResult($sql);
+        $std = $userList[0];
+        $id = $std['ID'];
+    	if (strcasecmp($ss_id, $id) != 0){
+        	$error['username'] = "Username này đã được sử dụng";
+        	echo '<script type="text/javascript">alert("Username này đã được sử dụng")</script>;</script>';
+    	}
+
+		if (empty($error)){
+			$s_newpass = md5($s_newpass);
+			$sql = "update user set Name = '$s_name', Birthday = '$s_bday', Phonenumber = '$s_pnumber', Email = '$s_email', Username = '$s_user' where ID = '$ss_id'";
+			execute($sql);
+			echo '<script type="text/javascript">alert("Chỉnh sửa thông tin thành công");',
+				 'window.location = "profile.php";',
+				 '</script>';
+			die();
+		}
+	
+	}
+?>
+>>>>>>> parent of 493a4d7 (Revert "Final repair 02"):profile.php
 <!DOCTYPE html>
 <html>
 
