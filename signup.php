@@ -2,68 +2,62 @@
     require_once ('dbhelp.php');
 	$s_name = $s_bday = $s_pnumber = $s_email = $s_user = $s_pass = $s_repass = '';
 
-	if (!empty($_POST)){
+	if (!empty($_POST)) {
 
 		$error = array();
 
-        if (isset($_POST['name'])){
+        if (isset($_POST['name'])) {
 			$s_name = $_POST['name'];
 		}
 
-        if (isset($_POST['birthday'])){
+        if (isset($_POST['birthday'])) {
 			$s_bday = $_POST['birthday'];
 		}
 
-        if (isset($_POST['phonenumber'])){
+        if (isset($_POST['phonenumber'])) {
 			$s_pnumber = $_POST['phonenumber'];
 		}
 	
-		if (isset($_POST['email'])){
+		if (isset($_POST['email'])) {
 			$s_email = $_POST['email'];
 		}
 	
-		if (isset($_POST['username'])){
+		if (isset($_POST['username'])) {
 			$s_user = $_POST['username'];
 		}
 	
-		if (isset($_POST['password'])){
+		if (isset($_POST['password'])) {
 			$s_pass = $_POST['password'];
 		}
 		
-        if (isset($_POST['confirm-password'])){
+        if (isset($_POST['confirm-password'])) {
 			$s_repass = $_POST['confirm-password'];
 		}
 
-        $s_name    = str_replace('\'', '\\\'', $s_name);
+		if (strcasecmp($s_pass, $s_repass) != 0) {
+			$error['password'] = "Confirm password không đúng";
+            echo '<script type="text/javascript">alert("Confirm password không đúng")</script>;',
+            'window.location = "signup.php";',
+            '</script>';
+		}
+
+    	$sql = "select * from user where Username = '$s_user'";
+    	$userList = executeResult($sql);
+    	if ($userList != NULL) {
+        	$error['username'] = "Username này đã được sử dụng";
+        	echo '<script type="text/javascript">alert("Username này đã được sử dụng")</script>;',
+            'window.location = "signup.php";',
+            '</script>';
+    	}
+
+		$s_name    = str_replace('\'', '\\\'', $s_name);
         $s_bday    = str_replace('\'', '\\\'', $s_bday);
         $s_pnumber = str_replace('\'', '\\\'', $s_pnumber);
 		$s_email   = str_replace('\'', '\\\'', $s_email);
 		$s_user    = str_replace('\'', '\\\'', $s_user);
 		$s_pass    = str_replace('\'', '\\\'', $s_pass);
 
-        if (strlen($s_user) < 6){
-            $error['usernamelen'] = "Username này có chiều dài nhỏ hơn 6 ký tự";
-        	echo '<script type="text/javascript">alert("Username này có chiều dài nhỏ hơn 6 ký tự")</script>;</script>';
-        }
-
-        $sql = "select * from user where Username = '$s_user'";
-    	$userList = executeResult($sql);
-    	if ($userList != NULL){
-        	$error['username'] = "Username này đã được sử dụng";
-        	echo '<script type="text/javascript">alert("Username này đã được sử dụng")</script>;</script>';
-    	}
-
-        if (strlen($s_pass) < 6){
-            $error['passwordlen'] = "Password này có chiều dài nhỏ hơn 6 ký tự";
-        	echo '<script type="text/javascript">alert("Pasword này có chiều dài nhỏ hơn 6 ký tự")</script>;</script>';
-        }
-
-		if (strcasecmp($s_pass, $s_repass) != 0){
-			$error['password'] = "Confirm password không đúng";
-            echo '<script type="text/javascript">alert("Confirm password không đúng")</script>;</script>';
-		}
-
-		if (empty($error)){
+		if (empty($error)) {
 			$s_pass = md5($s_pass);
 			$sql = "insert into user(ID, Name, Birthday, Phonenumber, Email, Username, Password) value('', '$s_name', '$s_bday', '$s_pnumber', '$s_email', '$s_user', '$s_pass')";
 			execute($sql);
