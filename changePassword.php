@@ -169,7 +169,7 @@
                             <input class="accept-btn" onclick="window.location = 'profile.php';"
                                 style="font-size: 16px; margin-top: 50px; text-align: center; margin-right: 100px;"
                                 value="Hủy">
-                            <input type="submit" class="confirm" style="font-size: 16px;" value="Xác nhận">
+                            <input type="submit" class="decline-btn" style="font-size: 16px;" value="Xác nhận">
                         </form>
                     </div>
 

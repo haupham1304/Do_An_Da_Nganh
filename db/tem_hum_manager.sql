@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: May 24, 2022 at 05:50 PM
+-- Generation Time: May 27, 2022 at 06:14 AM
 -- Server version: 10.4.22-MariaDB
 -- PHP Version: 8.1.2
 
@@ -24,6 +24,19 @@ SET time_zone = "+00:00";
 -- --------------------------------------------------------
 
 --
+-- Table structure for table `activity_history`
+--
+
+CREATE TABLE `activity_history` (
+  `ID` int(10) NOT NULL,
+  `Describe` mediumtext NOT NULL,
+  `Type` varchar(100) NOT NULL,
+  `Time` date NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+-- --------------------------------------------------------
+
+--
 -- Table structure for table `device`
 --
 
@@ -37,19 +50,6 @@ CREATE TABLE `device` (
 -- --------------------------------------------------------
 
 --
--- Table structure for table `record`
---
-
-CREATE TABLE `record` (
-  `ID` int(10) NOT NULL,
-  `Temperature` varchar(100) NOT NULL,
-  `Humid` varchar(100) NOT NULL,
-  `Time` date NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
-
--- --------------------------------------------------------
-
---
 -- Table structure for table `remider`
 --
 
@@ -57,6 +57,19 @@ CREATE TABLE `remider` (
   `ID` int(100) NOT NULL,
   `Name` varchar(100) NOT NULL,
   `Mode` varchar(100) NOT NULL,
+  `Time` date NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `report`
+--
+
+CREATE TABLE `report` (
+  `ID` int(10) NOT NULL,
+  `Temperature` varchar(100) NOT NULL,
+  `Humid` varchar(100) NOT NULL,
   `Time` date NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
@@ -88,21 +101,27 @@ INSERT INTO `user` (`ID`, `Name`, `Birthday`, `Phonenumber`, `Email`, `Username`
 --
 
 --
+-- Indexes for table `activity_history`
+--
+ALTER TABLE `activity_history`
+  ADD PRIMARY KEY (`ID`);
+
+--
 -- Indexes for table `device`
 --
 ALTER TABLE `device`
   ADD PRIMARY KEY (`ID`);
 
 --
--- Indexes for table `record`
---
-ALTER TABLE `record`
-  ADD PRIMARY KEY (`ID`);
-
---
 -- Indexes for table `remider`
 --
 ALTER TABLE `remider`
+  ADD PRIMARY KEY (`ID`);
+
+--
+-- Indexes for table `report`
+--
+ALTER TABLE `report`
   ADD PRIMARY KEY (`ID`);
 
 --
@@ -116,9 +135,9 @@ ALTER TABLE `user`
 --
 
 --
--- AUTO_INCREMENT for table `record`
+-- AUTO_INCREMENT for table `activity_history`
 --
-ALTER TABLE `record`
+ALTER TABLE `activity_history`
   MODIFY `ID` int(10) NOT NULL AUTO_INCREMENT;
 
 --
@@ -126,6 +145,12 @@ ALTER TABLE `record`
 --
 ALTER TABLE `remider`
   MODIFY `ID` int(100) NOT NULL AUTO_INCREMENT;
+
+--
+-- AUTO_INCREMENT for table `report`
+--
+ALTER TABLE `report`
+  MODIFY `ID` int(10) NOT NULL AUTO_INCREMENT;
 
 --
 -- AUTO_INCREMENT for table `user`
