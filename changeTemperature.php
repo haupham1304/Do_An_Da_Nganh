@@ -1,3 +1,4 @@
+<?php session_start(); ?>
 <!DOCTYPE html>
 <html>
     <head>
@@ -24,25 +25,25 @@
                     </h1>
                     <div>
                         <i class="ti-user"></i>
-                        <a href="profile.html">
+                        <a href="profile.php">
                             <div class="menu-btn">Tài khoản</div>
                         </a>
                     </div>
                     <div>
                         <i class="ti-settings"></i>
-                        <a href="setting.html">
+                        <a href="setting.php">
                             <div class="menu-btn">Cài đặt</div>
                         </a>
                     </div>
                     <div>
                         <i class="ti-notepad"></i>
-                        <a href="record.html">
+                        <a href="record.php">
                             <div class="menu-btn">Hồ sơ hệ thống</div>
                         </a>
                     </div>
                     <div>
                         <i class="ti-support"></i>
-                        <a href="guide.html">
+                        <a href="guide.php">
                             <div class="menu-bt">Hướng dẫn sử dụng</div>
                         </a>
                     </div>
@@ -55,25 +56,41 @@
                         <div class="search-bar">
                             <input type="text" placeholder="Search..">
                         </div>
-                        <a href="homepage.html"><div class="header-btn">Trang chủ</div></a>
+                        <a href="homepage.php"><div class="header-btn">Trang chủ</div></a>
                         <a href="#"><div class="header-btn">Về chúng tôi</div></a>
                         <a href="#"><div class="header-btn">Hỗ trợ</div></a>
                         <div class="account-btn">
                             <i class="ti-user"></i>
-                            <div class="account-name">Phạm Công Hậu</div>
+                            <?php
+                                require_once ('dbhelp.php');
+                                if (isset($_SESSION)){
+                                    $u = $_SESSION['user'];
+                                    $p = $_SESSION['pass'];   
+                                    $sql = "select * from user where Username = '$u' and Password = '$p'";
+                                    $userList = executeResult($sql);
+                                    $std = $userList[0];
+                                    echo '<div class="account-name">'.$std['Name'].'</div>';
+                                }
+                            ?>
                             <i class="ti-angle-down" onclick="openUserMenu()"></i>
                             <i class="ti-angle-up" onclick="closeUserMenu()"></i>
                         </div>
     
                         <!-- user menu -->
-                        <div class="user-menu">
-                            <div class="user-btn" id="profile-btn" onclick="window.location = 'profile.html';">
+                        <div class="user-dropdown-menu">
+                            <a href="profile.php" class="user-info">Tài khoản của tôi</a>
+                            <form method="post" action="logout.php">
+                                <button class="logout">Đăng Xuất</button>
+                            </form>
+                        </div>
+                        <!-- <div class="user-menu">
+                            <div class="user-btn" id="profile-btn" onclick="window.location = 'profile.php';">
                                 Hồ sơ
                             </div>
                             <div class="user-btn" id="logout-btn">
                                 Đăng xuất
                             </div>
-                        </div>
+                        </div> -->
                     </div>
 
                     <!-- form và đề cử -->
@@ -86,21 +103,21 @@
                                 <div class="input-field">
                                     <label for="temp-input">Nhiệt độ: </label>
                                     <select name="temp-input" id="temp-input" ng-model="tempa">
-                                        <option value="" hidden selected>Chọn nhiệt độ</option>
+                                        <option value="Chọn nhiệt độ" hidden selected>Chọn nhiệt độ</option>
                                         <option value="{{item}}" ng-repeat="item in lstT track by $index">{{item}}</option>
                                     </select>
                                 </div>
                                 <div class="input-field">
                                     <label for="humid-input">Độ ẩm: </label>
                                     <select name="humid-input" id="humid-input" ng-model="humi">
-                                        <option value="" hidden selected>Chọn độ ẩm</option>
+                                        <option value="Chọn độ ẩm" hidden selected>Chọn độ ẩm</option>
                                         <option value="{{item}}" ng-repeat="item in lstH track by $index">{{item}}</option>
                                     </select>
                                 </div>
 
                                 <div class="modify-form-btns">
-                                    <a class="decline-btn" href="#" ng-click="sendToServer()">Xác nhận</a>
-                                    <a class="accept-btn" href="homepage.html">Hủy</a>
+                                    <a class="decline-btn" href="homepage.php" ng-click="sendToServer()">Xác nhận</a>
+                                    <a class="accept-btn" href="homepage.php">Hủy</a>
                                 </div>
                             </form>
                         </div>

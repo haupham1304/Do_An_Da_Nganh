@@ -1,5 +1,3 @@
-<<<<<<< HEAD:changePassword.html
-=======
 <?php session_start(); ?>
 <?php
     require_once ('dbhelp.php');
@@ -26,6 +24,13 @@
         $s_newpass    = str_replace('\'', '\\\'', $s_newpass);
         $s_pass       = str_replace('\'', '\\\'', $s_pass);
 
+		if (strcasecmp($s_newpass, $s_repass) != 0){
+			$error['password'] = "Confirm password không đúng";
+            echo '<script type="text/javascript">alert("Confirm password không đúng");',
+            'window.location = "changePassword.php";',
+            '</script>';
+		}
+
         $s_pass = md5($s_pass);
     	$sql = "select * from user where Username = '$s_user'";
     	$userList = executeResult($sql);
@@ -33,18 +38,10 @@
         $pass = $std['Password'];
     	if (strcasecmp($s_pass, $pass) != 0){
         	$error['password'] = "Password bạn nhập không đúng";
-        	echo '<script type="text/javascript">alert("Password bạn nhập không đúng");</script>';
+        	echo '<script type="text/javascript">alert("Password bạn nhập không đúng");',
+            'window.location = "changePassword.php";',
+            '</script>';
     	}
-
-        if (strlen($s_newpass) < 6){
-            $error['passwordlen'] = "Password mới có chiều dài nhỏ hơn 6 ký tự";
-        	echo '<script type="text/javascript">alert("Pasword mới có chiều dài nhỏ hơn 6 ký tự")</script>;</script>';
-        }
-
-		if (strcasecmp($s_newpass, $s_repass) != 0){
-			$error['password'] = "Confirm password không đúng";
-            echo '<script type="text/javascript">alert("Confirm password không đúng");</script>';
-		}
 
 		if (empty($error)){
 			$s_newpass = md5($s_newpass);
@@ -59,7 +56,6 @@
 	
 	}
 ?>
->>>>>>> parent of 493a4d7 (Revert "Final repair 02"):changePassword.php
 <!DOCTYPE html>
 <html>
 
@@ -86,19 +82,19 @@
                 </h1>
                 <div>
                     <i class="ti-user"></i>
-                    <a href="profile.html">
+                    <a href="profile.php">
                         <div class="menu-btn">Hồ sơ</div>
                     </a>
                 </div>
                 <div>
                     <i class="ti-unlock"></i>
-                    <a href="changePassword.html">
+                    <a href="changePassword.php">
                         <div class="menu-btn">Đổi mật khẩu</div>
                     </a>
                 </div>
                 <div>
                     <i class="ti-trash"></i>
-                    <a href="deleteAccount.html">
+                    <a href="deleteAccount.php">
                         <div class="menu-bt">Xóa tài khoản</div>
                     </a>
                 </div>
@@ -111,7 +107,7 @@
                     <div class="search-bar">
                         <input type="text" placeholder="Search..">
                     </div>
-                    <a href="homepage.html">
+                    <a href="homepage.php">
                         <div class="header-btn">Trang chủ</div>
                     </a>
                     <a href="#">
@@ -122,20 +118,36 @@
                     </a>
                     <div class="account-btn">
                         <i class="ti-user"></i>
-                        <div class="account-name">Phạm Công Hậu</div>
+                        <?php
+                            require_once ('dbhelp.php');
+                            if (isset($_SESSION)){
+                                $u = $_SESSION['user'];
+                                $p = $_SESSION['pass'];   
+                                $sql = "select * from user where Username = '$u' and Password = '$p'";
+                                $userList = executeResult($sql);
+                                $std = $userList[0];
+                                echo '<div class="account-name">'.$std['Name'].'</div>';
+                            }
+                        ?>
                         <i class="ti-angle-down" onclick="openUserMenu()"></i>
                         <i class="ti-angle-up" onclick="closeUserMenu()"></i>
                     </div>
 
                     <!-- user menu -->
-                    <div class="user-menu">
-                        <div class="user-btn" id="profile-btn" onclick="window.location = 'profile.html';">
+                    <div class="user-dropdown-menu">
+                        <a href="profile.php" class="user-info">Tài khoản của tôi</a>
+                        <form method="post" action="logout.php">
+                            <button class="logout">Đăng Xuất</button>
+                        </form>
+                    </div>
+                    <!-- <div class="user-menu">
+                        <div class="user-btn" id="profile-btn" onclick="window.location = 'profile.php';">
                             Hồ sơ
                         </div>
                         <div class="user-btn" id="logout-btn">
                             Đăng xuất
                         </div>
-                    </div>
+                    </div> -->
                 </div>
 
                 <!-- Phần nội dung và thông báo -->
@@ -143,30 +155,21 @@
                     <div class="info">
                         <h1>Đổi mật khẩu</h1>
                         <hr style="width:100%;text-align:left;margin-left:1">
-                        <form>
+                        <form method="post">
                             <label class="label-input" for="password">Nhập mật khẩu hiện tại</label>
-                            <input type="text" class="text-input" name="password" id="password">
+                            <input type="password" class="text-input" name="password" id="password" required="true">
                             <br>
                             <label class="label-input" for="new-password">Nhập mật khẩu mới</label>
-                            <input type="text" class="text-input" name="new-password" id="new-password">
+                            <input type="password" class="text-input" name="new-password" id="new-password" required="true">
                             <br>
                             <label class="label-input" for="confirm-password">Nhập lại mật khẩu mới</label>
-<<<<<<< HEAD:changePassword.php
                             <input type="password" class="text-input" name="confirm-password" id="confirm-password" required="true">
                             <br>
                             <input class="accept-btn" onclick="window.location = 'profile.php';"
                                 style="font-size: 16px; margin-top: 50px; text-align: center; margin-right: 100px;"
                                 value="Hủy">
                             <input type="submit" class="decline-btn" style="font-size: 16px;" value="Xác nhận">
-=======
-                            <input type="text" class="text-input" name="confirm-password" id="confirm-password">
->>>>>>> parent of 7115811 (Final repair 01):changePassword.html
                         </form>
-                        <br>
-                        <div class="modify-form-btns">
-                            <a class="accept-btn" href="profile.html">Hủy</a>
-                            <a class="decline-btn" href="signin.html">Xác nhận</a>
-                        </div>
                     </div>
 
                     <!-- Thông báo -->

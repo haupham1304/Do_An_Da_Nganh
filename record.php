@@ -1,3 +1,4 @@
+<?php session_start(); ?>
 <!DOCTYPE html>
 <html>
 
@@ -30,25 +31,25 @@
                     </h1>
                     <div>
                         <i class="ti-user"></i>
-                        <a href="profile.html">
+                        <a href="profile.php">
                             <div class="menu-btn">Tài khoản</div>
                         </a>
                     </div>
                     <div>
                         <i class="ti-settings"></i>
-                        <a href="setting.html">
+                        <a href="setting.php">
                             <div class="menu-btn">Cài đặt</div>
                         </a>
                     </div>
                     <div>
                         <i class="ti-notepad"></i>
-                        <a href="record.html">
+                        <a href="record.php">
                             <div class="menu-btn">Hồ sơ hệ thống</div>
                         </a>
                     </div>
                     <div>
                         <i class="ti-support"></i>
-                        <a href="guide.html">
+                        <a href="guide.php">
                             <div class="menu-bt">Hướng dẫn sử dụng</div>
                         </a>
                     </div>
@@ -64,7 +65,7 @@
                         <div class="search-bar">
                             <input type="text" placeholder="Search..">
                         </div>
-                        <a href="homepage.html">
+                        <a href="homepage.php">
                             <div class="header-btn">Trang chủ</div>
                         </a>
                         <a href="#">
@@ -75,21 +76,37 @@
                         </a>
                         <div class="account-btn">
                             <i class="ti-user"></i>
-                            <div class="account-name">{{userName}}</div>
+                            <?php
+                                require_once ('dbhelp.php');
+                                if (isset($_SESSION)){
+                                    $u = $_SESSION['user'];
+                                    $p = $_SESSION['pass'];   
+                                    $sql = "select * from user where Username = '$u' and Password = '$p'";
+                                    $userList = executeResult($sql);
+                                    $std = $userList[0];
+                                    echo '<div class="account-name">'.$std['Name'].'</div>';
+                                }
+                            ?>
                             <i class="ti-angle-down" onclick="openUserMenu()"></i>
                             <i class="ti-angle-up" onclick="closeUserMenu()"></i>
                         </div>
 
                         <!-- user menu -->
-                        <div class="user-menu">
+                        <div class="user-dropdown-menu">
+                            <a href="profile.php" class="user-info">Tài khoản của tôi</a>
+                            <form method="post" action="logout.php">
+                                <button class="logout">Đăng Xuất</button>
+                            </form>
+                        </div>
+                        <!-- <div class="user-menu">
                             <div class="user-btn" id="profile-btn"
-                                onclick="window.location= 'profile.html';">
+                                onclick="window.location= 'profile.php';">
                                 Hồ sơ
                             </div>
                             <div class="user-btn" id="logout-btn">
                                 Đăng xuất
                             </div>
-                        </div>
+                        </div> -->
                     </div>
 
                     <!-- Phần nội dung và thông báo -->
@@ -102,7 +119,7 @@
                             </div>
                             <hr style="width:100%;text-align:left;margin-left:1"
                                 />
-                            <div style="display:{{viewGeneral}}" >
+                            <div style="display:{{viewGeneral}};" >
                                 <div ng-repeat="item in items track by $index">
                                     <div class="info-btns_record"
                                         ng-click="viewDetailR($index)">
