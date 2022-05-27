@@ -54,24 +54,28 @@ form{
     margin-left: 30px;
 }
 
-.signup-btn{
+.signup-btn-container{
     background-color: #3693EA;
-    border: none;
     border-radius: 20px;
-    color: #FFFFFF;
     cursor: pointer;
+    display: inline-block;
+    margin-top: 50px;
+    width: 500px;
+    height: 35px;
+    align-items: center;
+    justify-content: center;
+}
+
+.signup-btn{
+    color: #FFFFFF;
     font-weight: 500;
     font-size: 20px;
     line-height: 36px;
-    margin-top: 50px;
-    outline: none;
     text-decoration: none;
-    height: 35px;
-    width: 500px;
 }
 
-.signup-btn:hover,
-.signup-btn:active{
+.signup-btn-container:hover,
+.signup-btn-container:active{
     background-color: #114E87;
 }
 

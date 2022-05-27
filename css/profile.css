@@ -8,7 +8,6 @@ h1{
 
 form{
     display: inline-block;
-    margin-right: 50px;
     text-align: right;
     width: 720px;
 }
@@ -29,26 +28,41 @@ form{
     margin-left: 30px;
 }
 
-.signup-btn{
+.signup-btn-container{
     background-color: #3693EA;
-    border: none;
     border-radius: 20px;
-    color: #FFFFFF;
     cursor: pointer;
+    margin-top: 50px;
+    width: 400px;
+    height: 35px;
+    display: inline-block;
+    text-align: center;
+}
+
+.signup-btn{
+    color: #FFFFFF;
     font-weight: 500;
     font-size: 20px;
     line-height: 36px;
-    margin-right: 50px;
-    margin-top: 50px;
-    outline: none;
     text-decoration: none;
-    height: 35px;
-    width: 500px;
 }
 
-.signup-btn:hover,
-.signup-btn:active{
+.signup-btn-container:hover,
+.signup-btn-container:active{
     background-color: #114E87;
+}
+
+.modify-form-btns{
+    display: flex;
+    justify-content: space-around;
+    text-align: center;
+    margin-top: 50px;
+    height: 40px;
+    font-size: 16px;
+}
+
+.modify-form-btns a{
+    text-decoration: none;
 }
 
 .decline-btn{
@@ -61,6 +75,7 @@ form{
     min-width: 150px;
     line-height: 38px;
     margin-right: 100px;
+
 }
 
 .decline-btn:hover,
