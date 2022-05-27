@@ -3,13 +3,13 @@
 	require_once ('dbhelp.php');
 
 	$u = $p = '';
-	if (!empty($_POST)) {
+	if (!empty($_POST)){
 
-        if (isset($_POST['username'])) {
+        if (isset($_POST['username'])){
 			$u = $_POST['username'];
 		}
 	
-		if (isset($_POST['password'])) {
+		if (isset($_POST['password'])){
 			$p = $_POST['password'];
 		}
 
@@ -17,12 +17,12 @@
 
 		$sql = "select * from user where Username = '$u' and Password = '$p'";
 		$userList = executeResult($sql);
-		if ($userList == NULL) {
+		if ($userList == NULL){
 			echo '<script type="text/javascript">alert("username hoặc password không đúng");',
-				'window.location = "signin.php";',
-				'</script>';
+            'window.location = "signin.php";',
+            '</script>';
 		}
-		else {
+		else{
 			$_SESSION['id'] = "1";
 			$_SESSION['user'] = $u;
 			$_SESSION['pass'] = $p;
@@ -30,28 +30,6 @@
 			die();
 		}
 	}
-	// else {
-	// 	if (isset($_SESSION)) {
-	// 		if (isset($_SESSION['user'])) {
-	// 			$u = $_SESSION['user'];
-	// 		}
-		
-	// 		if (isset($_SESSION['pass'])) {
-	// 			$p = $_SESSION['pass'];
-	// 		}
-	
-	// 		$sql = "select * from user where Username = '$u' and Password = '$p'";
-	// 		$userList = executeResult($sql);
-	// 		if ($userList == NULL) {
-	// 			header('Location: signin.php');
-	// 		}
-	// 		else {
-	// 			header('Location: homepage.php');
-	// 			die();
-	// 		}
-	// 	}
-	// }
-
 ?>
 <!DOCTYPE html>
 <html>

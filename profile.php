@@ -39,24 +39,31 @@
 			$s_user = $_POST['username'];
 		}
 
+        $s_name    = str_replace('\'', '\\\'', $s_name);
+        $s_bday    = str_replace('\'', '\\\'', $s_bday);
+        $s_pnumber = str_replace('\'', '\\\'', $s_pnumber);
+		$s_email   = str_replace('\'', '\\\'', $s_email);
+		$s_user    = str_replace('\'', '\\\'', $s_user);
+
+        if (strlen($s_user) < 6){
+            $error['usernamelen'] = "Username này có chiều dài nhỏ hơn 6 ký tự";
+        	echo '<script type="text/javascript">alert("Username này có chiều dài nhỏ hơn 6 ký tự");',
+            'window.location = "profile.php";',
+            '</script>';
+        }
+
     	$sql = "select * from user where Username = '$s_user'";
     	$userList = executeResult($sql);
         $std = $userList[0];
         $id = $std['ID'];
     	if (strcasecmp($ss_id, $id) != 0){
         	$error['username'] = "Username này đã được sử dụng";
-        	echo '<script type="text/javascript">alert("Username này đã được sử dụng")</script>;',
-            'window.location = "signup.php";',
+        	echo '<script type="text/javascript">alert("Username này đã được sử dụng");',
+            'window.location = "profile.php";',
             '</script>';
     	}
 
-		$s_name    = str_replace('\'', '\\\'', $s_name);
-        $s_bday    = str_replace('\'', '\\\'', $s_bday);
-        $s_pnumber = str_replace('\'', '\\\'', $s_pnumber);
-		$s_email   = str_replace('\'', '\\\'', $s_email);
-		$s_user    = str_replace('\'', '\\\'', $s_user);
-
-		if (empty($error)) {
+		if (empty($error)){
 			$s_newpass = md5($s_newpass);
 			$sql = "update user set Name = '$s_name', Birthday = '$s_bday', Phonenumber = '$s_pnumber', Email = '$s_email', Username = '$s_user' where ID = '$ss_id'";
 			execute($sql);

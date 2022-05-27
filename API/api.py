@@ -13,7 +13,7 @@ CORS(app)
 
 AIO_FEED_ID=["nhiet-do","do-am","changetem","lasttime"]
 AIO_USERNAME="hoangproIT"
-AIO_KEY="aio_bkLo16fvKPah5qraWFMOiGQN8RJ2"
+AIO_KEY="aio_uPCS51V2ueFMyo5oSGQglAEOYehb"
 
 def connected(client):
     print("Ket noi thanhh cong")
@@ -70,43 +70,6 @@ def random_data(value):
         return random.randint(80, 110)/3
     else:
         return random.randint(400, 500)/5
-import flask
-from tokenize import group
-import json
-import requests
-
-api_url_base = 'https://io.adafruit.com/api/v2/'
-api_token1 = 'hoangproIT/feeds/nhiet-do'
-api_token2 = 'hoangproIT/feeds/do-am'
-app = flask.Flask(__name__)
-app.config["DEBUG"] = True
-
-acc_url1 = api_url_base + api_token1
-acc_info1 = json.loads(requests.get(acc_url1).text)
-print(acc_info1)
-print()
-acc_url2 = api_url_base + api_token2
-acc_info2 = json.loads(requests.get(acc_url2).text)
-print(acc_info2)
-
-data = {}
-data['nhiet-do'] = []
-data['do-am'] = []
-data['nhiet-do'].append({
-    'value': acc_info1['last_value'],
-    'time': acc_info1['updated_at']
-})
-data['do-am'].append({
-    'value': acc_info2['last_value'],
-    'time': acc_info2['updated_at']
-})
-
-
-with open('data.txt', 'w') as outfile:
-    json.dump(data, outfile)
-
-def checkButton():
-    pass
 
 @app.route('/check', methods=['GET'])
 def home():

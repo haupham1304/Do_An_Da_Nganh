@@ -35,26 +35,6 @@ def writeData():
     client.publish(AIO_FEED_ID[0], random_data(AIO_FEED_ID[0]))
     client.publish(AIO_FEED_ID[1], random_data(AIO_FEED_ID[1]))
 
-def message(payload,client=client,feed_id=AIO_FEED_ID):
-    print("data: ")
-        
-def processData(data:str,tranId):
-    data=data.replace("!","")
-    data=data.replace("#","")
-    split_data=data.split(":")
-    try:
-        if split_data[1]=="TEMP":
-            client.publish("nhiet-do",split_data[2])
-            if(tranId==int(split_data[1])):
-                pass
-        else:
-            client.publish("do-am",split_data[2])
-            if(tranId==int(split_data[1])):
-                pass
-    except:
-        pass
-
-
 client=MQTTClient(AIO_USERNAME,AIO_KEY)
 client.on_connect=connected
 client.on_disconnect=disconnected
@@ -66,5 +46,3 @@ client.loop_background()
 while True:
     writeData()
     time.sleep(300)
-
-

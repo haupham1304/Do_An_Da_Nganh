@@ -24,13 +24,6 @@
         $s_newpass    = str_replace('\'', '\\\'', $s_newpass);
         $s_pass       = str_replace('\'', '\\\'', $s_pass);
 
-		if (strcasecmp($s_newpass, $s_repass) != 0){
-			$error['password'] = "Confirm password không đúng";
-            echo '<script type="text/javascript">alert("Confirm password không đúng");',
-            'window.location = "changePassword.php";',
-            '</script>';
-		}
-
         $s_pass = md5($s_pass);
     	$sql = "select * from user where Username = '$s_user'";
     	$userList = executeResult($sql);
@@ -42,6 +35,20 @@
             'window.location = "changePassword.php";',
             '</script>';
     	}
+
+        if (strlen($s_newpass) < 6){
+            $error['passwordlen'] = "Password mới có chiều dài nhỏ hơn 6 ký tự";
+        	echo '<script type="text/javascript">alert("Pasword mới có chiều dài nhỏ hơn 6 ký tự")</script>;',
+            'window.location = "changePassword.php";',
+            '</script>';
+        }
+
+		if (strcasecmp($s_newpass, $s_repass) != 0){
+			$error['password'] = "Confirm password không đúng";
+            echo '<script type="text/javascript">alert("Confirm password không đúng");',
+            'window.location = "changePassword.php";',
+            '</script>';
+		}
 
 		if (empty($error)){
 			$s_newpass = md5($s_newpass);

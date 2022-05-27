@@ -12,7 +12,7 @@
         $id = $std['ID'];
         $pass = $std['Password'];
         $s_pass = '';
-        if (isset($_POST["confirm-delete"])) {
+        if (isset($_POST["confirm-delete"])){
             $s_pass = $_POST['confirm-delete'];
         }
         $s_pass = md5($s_pass);
