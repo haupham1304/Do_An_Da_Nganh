@@ -13,7 +13,7 @@ CORS(app)
 
 AIO_FEED_ID=["nhiet-do","do-am","changetem","lasttime"]
 AIO_USERNAME="hoangproIT"
-AIO_KEY="aio_uPCS51V2ueFMyo5oSGQglAEOYehb"
+AIO_KEY="aio_TOfW954PUsB8V2W3ezbOwV0jAcrZ"
 
 def connected(client):
     print("Ket noi thanhh cong")

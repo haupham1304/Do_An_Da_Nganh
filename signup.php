@@ -41,6 +41,15 @@
 		$s_user    = str_replace('\'', '\\\'', $s_user);
 		$s_pass    = str_replace('\'', '\\\'', $s_pass);
 
+        $sql = "select * from user where Email = '$s_mail'";
+    	$userList = executeResult($sql);
+    	if ($userList != NULL){
+        	$error['email'] = "Email này đã được sử dụng";
+        	echo '<script type="text/javascript">alert("Email này đã được sử dụng");',
+            'window.location = "signup.php";',
+            '</script>';
+    	}
+
         if (strlen($s_user) < 6){
             $error['usernamelen'] = "Username này có chiều dài nhỏ hơn 6 ký tự";
         	echo '<script type="text/javascript">alert("Username này có chiều dài nhỏ hơn 6 ký tự");',
